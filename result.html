@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check Result | Asanteman SHS</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Supabase CDN -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Student Result Portal</h1>
+    <p>Asanteman Senior High School</p>
+  </header>
+
+  <main class="main">
+
+    <section class="login-box">
+      <h2>Student Login</h2>
+
+      <form id="studentLoginForm">
+        <input type="text" id="studentCode" placeholder="Student Code" required />
+        <input type="text" id="fullName" placeholder="Full Name" required />
+        <button type="submit" class="btn">Check Result</button>
+      </form>
+
+      <p id="message"></p>
+    </section>
+
+    <section id="resultSection" style="display:none;">
+      <h2>Academic Results</h2>
+
+      <table border="1" width="100%" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Term</th>
+          </tr>
+        </thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Asanteman SHS</p>
+  </footer>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/result.js"></script>
+
+</body>
+</html>

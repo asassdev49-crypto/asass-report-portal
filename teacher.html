@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Portal | Asanteman SHS</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Supabase CDN -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Teacher Portal</h1>
+    <p>Asanteman Senior High School</p>
+  </header>
+
+  <main class="main">
+
+    <!-- LOGIN -->
+    <section id="loginSection">
+      <h2>Teacher Login</h2>
+
+      <form id="teacherLoginForm">
+        <input type="text" id="teacherCode" placeholder="Teacher Code" required />
+        <input type="text" id="teacherName" placeholder="Full Name" required />
+        <button type="submit" class="btn">Login</button>
+      </form>
+
+      <p id="loginMessage"></p>
+    </section>
+
+    <!-- UPLOAD RESULT -->
+    <section id="uploadSection" style="display:none;">
+      <h2>Upload Student Result</h2>
+
+      <form id="uploadForm">
+        <input type="text" id="studentCode" placeholder="Student Code" required />
+        <input type="text" id="subject" placeholder="Subject" required />
+        <input type="number" id="score" placeholder="Score (0-100)" required />
+        <input type="text" id="term" placeholder="Term (e.g. Term 1)" required />
+
+        <button type="submit" class="btn">Upload Result</button>
+      </form>
+
+      <p id="uploadMessage"></p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Asanteman SHS</p>
+  </footer>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/teacher.js"></script>
+
+</body>
+</html>

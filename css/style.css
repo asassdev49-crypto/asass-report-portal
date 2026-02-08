@@ -1,0 +1,74 @@
+:root {
+  --white: #ffffff;
+  --green: #0b7a3b;
+  --yellow: #f4c430;
+  --dark: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--white);
+  color: var(--dark);
+}
+
+.header {
+  background: var(--green);
+  color: var(--white);
+  text-align: center;
+  padding: 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: var(--yellow);
+  padding: 10px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: bold;
+}
+
+.main {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.courses ul {
+  list-style: square;
+  padding-left: 20px;
+}
+
+.actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  background: var(--green);
+  color: var(--white);
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn-alt {
+  background: var(--dark);
+}
+
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: #f1f1f1;
+  margin-top: 40px;
+}
