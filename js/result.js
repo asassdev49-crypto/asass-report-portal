@@ -6,40 +6,53 @@ const tableBody = document.getElementById("resultTableBody");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  message.textContent = "Checking details...";
   message.style.color = "black";
+  message.textContent = "Checking student...";
 
   const studentCode = document.getElementById("studentCode").value.trim();
-  const fullName = document.getElementById("fullName").value.trim();
 
-  // 1. Check student exists
-  const { data: student, error } = await supabaseClient
+  // STEP 1: Get student using ONLY student_code
+  const { data: student, error: studentError } = await supabase
     .from("Student")
     .select("*")
     .eq("student_code", studentCode)
-    .eq("full_name", fullName)
     .single();
 
-  if (error || !student) {
-    message.textContent = "Invalid student details.";
+  if (studentError) {
     message.style.color = "red";
+    message.textContent = "Student fetch error: " + studentError.message;
     return;
   }
 
-  // 2. Fetch results
-  const { data: results, error: resultError } = await supabaseClient
+  if (!student) {
+    message.style.color = "red";
+    message.textContent = "Student not found.";
+    return;
+  }
+
+  message.textContent = "Student found. Fetching results...";
+
+  // STEP 2: Get results
+  const { data: results, error: resultError } = await supabase
     .from("Results")
-    .select("subject, score, grade, term")
+    .select("*")
     .eq("student_id", student.id);
 
-  if (resultError || results.length === 0) {
-    message.textContent = "No results found.";
-    message.style.color = "orange";
+  if (resultError) {
+    message.style.color = "red";
+    message.textContent = "Result fetch error: " + resultError.message;
     return;
   }
 
-  // 3. Display results
+  if (!results || results.length === 0) {
+    message.style.color = "orange";
+    message.textContent = "No results found for this student.";
+    return;
+  }
+
+  // STEP 3: Display results
   tableBody.innerHTML = "";
+
   results.forEach((r) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -51,7 +64,7 @@ form.addEventListener("submit", async (e) => {
     tableBody.appendChild(row);
   });
 
-  message.textContent = "Result loaded successfully.";
-  message.style.color = "green";
   resultSection.style.display = "block";
+  message.style.color = "green";
+  message.textContent = "Results loaded successfully!";
 });
