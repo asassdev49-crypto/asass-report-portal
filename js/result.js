@@ -68,3 +68,10 @@ form.addEventListener("submit", async (e) => {
   message.style.color = "green";
   message.textContent = "Results loaded successfully!";
 });
+  const downloadBtn = document.getElementById("downloadBtn");
+
+downloadBtn.addEventListener("click", () => {
+  const element = document.getElementById("resultSection");
+
+  html2pdf().from(element).save("Student_Result.pdf");
+});
