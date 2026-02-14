@@ -74,6 +74,30 @@ uploadForm.addEventListener("submit", async (e) => {
     uploadMessage.style.color = "red";
     return;
   }
+  async function loadRecentResults() {
+  const { data, error } = await supabaseClient
+    .from("Results")
+    .select("*")
+    .order("id", { ascending: false })
+    .limit(5);
+
+  const recentTable = document.getElementById("recentResultsBody");
+
+  recentTable.innerHTML = "";
+
+  data.forEach((r) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${r.student_id}</td>
+      <td>${r.subject}</td>
+      <td>${r.score}</td>
+      <td>${r.term}</td>
+    `;
+    recentTable.appendChild(row);
+  });
+}
+
+loadRecentResults();
 
   // Insert result
   const { error: insertError } = await supabaseClient
