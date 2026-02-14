@@ -14,7 +14,7 @@ form.addEventListener("submit", async (e) => {
 
   // 1. Check student exists
   const { data: student, error } = await supabaseClient
-    .from("Students")
+    .from("Student")
     .select("*")
     .eq("student_code", studentCode)
     .eq("full_name", fullName)
