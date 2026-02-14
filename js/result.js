@@ -12,7 +12,7 @@ form.addEventListener("submit", async (e) => {
   const studentCode = document.getElementById("studentCode").value.trim();
 
   // STEP 1: Get student using ONLY student_code
-  const { data: student, error: studentError } = await supabase
+  const { data: student, error: studentError } = await supabaseClient
     .from("Student")
     .select("*")
     .eq("student_code", studentCode)
@@ -33,7 +33,7 @@ form.addEventListener("submit", async (e) => {
   message.textContent = "Student found. Fetching results...";
 
   // STEP 2: Get results
-  const { data: results, error: resultError } = await supabase
+  const { data: results, error: resultError } = await supabaseClient
     .from("Results")
     .select("*")
     .eq("student_id", student.id);
