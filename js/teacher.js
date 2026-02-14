@@ -64,7 +64,7 @@ uploadForm.addEventListener("submit", async (e) => {
 
   // Find student
   const { data: student, error: studentError } = await supabaseClient
-    .from("Students")
+    .from("Student")
     .select("id")
     .eq("student_code", studentCode)
     .single();
