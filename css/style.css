@@ -23,6 +23,14 @@ body {
   padding: 20px;
 }
 
+.logo {
+  width: 80px;
+  margin-bottom: 10px;
+}
+
+.header {
+  text-align: center;
+}
 .nav {
   display: flex;
   justify-content: center;
