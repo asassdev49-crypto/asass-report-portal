@@ -2,40 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Get Student Result Code | ASASS Portal</title>
+  <title>Get Student Code | ASASS Result Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/payment.css">
 </head>
 <body>
 
-  <section class="hero">
+  <!-- HERO SECTION -->
+  <header class="hero">
     <h1>ASASS Result Portal</h1>
     <p>Get Your Official Student Result Access Code</p>
-  </section>
+  </header>
 
-  <section class="instructions">
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
     <h2>How It Works</h2>
-
     <ol>
-      <li>Click the "Proceed to Payment" button below.</li>
+      <li>Click the <strong>Proceed to Payment</strong> button below.</li>
       <li>Complete payment securely using Mobile Money or Card.</li>
-      <li>After payment, your Student Access Code will be sent to your email.</li>
+      <li>Your Student Access Code will be sent to your email.</li>
       <li>Use the code to check your result instantly.</li>
     </ol>
   </section>
 
-  <section class="flyer">
-  <div class="flyer-container">
-    <img src="images/your-flyer.jpg" alt="ASASS Result Portal Flyer" class="flyer-image">
-  </div>
-</section>
-
-  <section class="payment-section">
-    <button id="payBtn">Proceed to Payment</button>
+  <!-- FLYER SECTION -->
+  <section class="flyer-section">
+    <div class="flyer-wrapper">
+      <img src="images/your-flyer.jpg" alt="ASASS Result Portal Flyer">
+    </div>
   </section>
 
+  <!-- PAYMENT BUTTON -->
+  <section class="payment-btn-section">
+    <button onclick="goToPayment()">Proceed to Payment</button>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>© 2026 ASASS Result Portal</p>
+    © 2026 ASASS Result Portal
   </footer>
+
+  <script>
+    function goToPayment() {
+      window.location.href = "https://paystack.com/your-payment-link";
+    }
+  </script>
+
 </body>
 </html>
