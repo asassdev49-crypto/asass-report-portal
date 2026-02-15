@@ -1,12 +1,19 @@
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabaseUrl = "YOUR_URL";
+const supabaseKey = "YOUR_PUBLIC_ANON_KEY";
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 let loggedInTeacher = null;
 
 const loginForm = document.getElementById("teacherLoginForm");
 const loginMessage = document.getElementById("loginMessage");
 const loginSection = document.getElementById("loginSection");
 const uploadSection = document.getElementById("uploadSection");
-
 const uploadForm = document.getElementById("uploadForm");
 const uploadMessage = document.getElementById("uploadMessage");
+const logoutBtn = document.getElementById("logoutBtn");
 
 // Grade calculator
 function calculateGrade(score) {
@@ -17,36 +24,93 @@ function calculateGrade(score) {
   return "F";
 }
 
-// TEACHER LOGIN
+// LOGIN
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  loginMessage.textContent = "Verifying...";
+  loginMessage.textContent = "Logging in...";
   loginMessage.style.color = "black";
 
-  const teacherCode = document.getElementById("teacherCode").value.trim();
-  const teacherName = document.getElementById("teacherName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-  const { data: teacher, error } = await supabaseClient
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    loginMessage.textContent = "Invalid email or password.";
+    loginMessage.style.color = "red";
+    return;
+  }
+
+  const { data: teacher, error: teacherError } = await supabase
     .from("Teachers")
     .select("*")
-    .eq("teacher_code", teacherCode)
-    .eq("full_name", teacherName)
+    .eq("auth_id", data.user.id)
     .single();
 
-  if (error || !teacher) {
-    loginMessage.textContent = "Invalid teacher details.";
+  if (teacherError || !teacher) {
+    loginMessage.textContent = "Teacher profile not found.";
     loginMessage.style.color = "red";
     return;
   }
 
   loggedInTeacher = teacher;
-  loginMessage.textContent = "Login successful.";
-  loginMessage.style.color = "green";
 
   loginSection.style.display = "none";
   uploadSection.style.display = "block";
+
+  loginMessage.textContent = "Login successful.";
+  loginMessage.style.color = "green";
+
+  loadRecentResults();
 });
+
+// CHECK SESSION ON PAGE LOAD
+async function checkSession() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user) {
+    loginSection.style.display = "none";
+    uploadSection.style.display = "block";
+    loadRecentResults();
+  }
+}
+
+checkSession();
+
+// LOGOUT
+logoutBtn.addEventListener("click", async () => {
+  await supabase.auth.signOut();
+  location.reload();
+});
+
+// LOAD RECENT RESULTS
+async function loadRecentResults() {
+  const { data, error } = await supabase
+    .from("Results")
+    .select("*")
+    .order("id", { ascending: false })
+    .limit(5);
+
+  const table = document.getElementById("recentResultsBody");
+  table.innerHTML = "";
+
+  if (data) {
+    data.forEach((r) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${r.student_id}</td>
+        <td>${r.subject}</td>
+        <td>${r.score}</td>
+        <td>${r.term}</td>
+      `;
+      table.appendChild(row);
+    });
+  }
+}
 
 // UPLOAD RESULT
 uploadForm.addEventListener("submit", async (e) => {
@@ -62,8 +126,7 @@ uploadForm.addEventListener("submit", async (e) => {
 
   const grade = calculateGrade(score);
 
-  // Find student
-  const { data: student, error: studentError } = await supabaseClient
+  const { data: student, error: studentError } = await supabase
     .from("Student")
     .select("id")
     .eq("student_code", studentCode)
@@ -74,50 +137,27 @@ uploadForm.addEventListener("submit", async (e) => {
     uploadMessage.style.color = "red";
     return;
   }
-  async function loadRecentResults() {
-  const { data, error } = await supabaseClient
-    .from("Results")
-    .select("*")
-    .order("id", { ascending: false })
-    .limit(5);
 
-  const recentTable = document.getElementById("recentResultsBody");
-
-  recentTable.innerHTML = "";
-
-  data.forEach((r) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${r.student_id}</td>
-      <td>${r.subject}</td>
-      <td>${r.score}</td>
-      <td>${r.term}</td>
-    `;
-    recentTable.appendChild(row);
-  });
-}
-
-loadRecentResults();
-
-  // Insert result
-  const { error: insertError } = await supabaseClient
+  const { error: insertError } = await supabase
     .from("Results")
     .insert({
       student_id: student.id,
-      subject: subject,
-      score: score,
-      grade: grade,
-      term: term,
+      subject,
+      score,
+      grade,
+      term,
       teacher_id: loggedInTeacher.id,
     });
 
   if (insertError) {
-    uploadMessage.textContent = "Failed to upload result.";
+    uploadMessage.textContent = "Upload failed.";
     uploadMessage.style.color = "red";
     return;
   }
 
   uploadMessage.textContent = "Result uploaded successfully.";
   uploadMessage.style.color = "green";
+
   uploadForm.reset();
+  loadRecentResults();
 });
