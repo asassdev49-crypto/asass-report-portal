@@ -1,0 +1,131 @@
+/* ============================= */
+/* ASASS RESULT PORTAL PAYMENT  */
+/* School Colors: White, Yellow, Green */
+/* ============================= */
+
+:root {
+  --primary-green: #0f6b34;
+  --light-green: #1f8a4d;
+  --primary-yellow: #f4c430;
+  --dark-yellow: #d4a514;
+  --white: #ffffff;
+  --light-bg: #f9fafb;
+}
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--light-bg);
+  color: #333;
+}
+
+/* ================= HERO SECTION ================= */
+
+.payment-hero {
+  background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+  color: var(--white);
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.payment-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.payment-hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* ================= INSTRUCTIONS SECTION ================= */
+
+.instructions {
+  padding: 60px 20px;
+  text-align: center;
+  background: var(--white);
+}
+
+.instructions h2 {
+  color: var(--primary-green);
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.instructions p {
+  max-width: 700px;
+  margin: auto;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* ================= FLYER SECTION ================= */
+
+.flyer {
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, #ffffff, #f1fdf5);
+  text-align: center;
+}
+
+.flyer-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.flyer-image {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 18px;
+  border: 5px solid var(--primary-yellow);
+  box-shadow: 0 20px 40px rgba(15, 107, 52, 0.2);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.flyer-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 30px 60px rgba(15, 107, 52, 0.3);
+}
+
+/* ================= PROCEED BUTTON ================= */
+
+.proceed-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: var(--white);
+}
+
+.proceed-btn {
+  background: var(--primary-yellow);
+  color: var(--primary-green);
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.proceed-btn:hover {
+  background: var(--dark-yellow);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(212, 165, 20, 0.3);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .payment-hero h1 {
+    font-size: 2rem;
+  }
+
+  .flyer-image {
+    max-width: 100%;
+  }
+}
