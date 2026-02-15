@@ -9,6 +9,31 @@
   box-sizing: border-box;
 }
 
+/* ================= PAYMENT ACCESS BUTTON ================= */
+
+.payment-access {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.payment-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #f4c430, #ffd84d);
+  color: #0f6b34;
+  padding: 16px 35px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(244, 196, 48, 0.3);
+}
+
+.payment-btn:hover {
+  background: linear-gradient(135deg, #ffd84d, #f4c430);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(244, 196, 48, 0.4);
+}
 .header {
   text-align: center;
   background: linear-gradient(135deg, #003366, #00509e);
